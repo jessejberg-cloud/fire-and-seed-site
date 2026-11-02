@@ -28,3 +28,4 @@
 | --- | --- |
 | 2026-11-02 | First version built locally: home, /brainspotting-pointers/ (FAQ, Product + Organization + FAQPage + Breadcrumb schema), /connect/, 404, sitemap, robots.txt, llms.txt, redirects. Copy drafted by Claude from Jesse's flier, care card and Stillpoint text; waiting for Jesse's review. Not pushed anywhere. |
 | 2026-11-02 | Domain fireandseed.com and order email jesse@intrinsicchange.com confirmed. Added "telescoping" and "pocket-sized" to the pointer page, FAQ, schema and llms.txt. |
+| 2026-11-02 | Netlify project fire-and-seed-site linked to this repo by Jesse (main publishes; pull requests get deploy previews behind Netlify team login). No custom domain yet. |

@@ -5,7 +5,7 @@ The website for Fire & Seed, where Jesse Jonesberg shares the things he makes by
 shelves come later and are not on the site yet.
 
 - Orders are by email only (no shop, no checkout). A contact form may come later.
-- Hosted on Netlify. Built by `node tools/build-site.cjs` into `dist/` (no dependencies).
+- Hosted on Netlify (project `fire-and-seed-site`, https://app.netlify.com/projects/fire-and-seed-site). Built by `node tools/build-site.cjs` into `dist/` (no dependencies).
 - Preview: `node tools/build-site.cjs && node tools/serve.cjs 5200`, then open http://localhost:5200
 - Screenshots (needs Playwright): `node tools/screenshots.cjs` with the preview running.
 - Share image and square logo: `node tools/build-images.cjs` after the mark changes.
