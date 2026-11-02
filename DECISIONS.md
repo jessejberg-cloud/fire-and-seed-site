@@ -3,7 +3,7 @@
 ## Facts
 | Item | Value | Status |
 | --- | --- | --- |
-| Domain | fireandseed.com (GoDaddy) | To confirm with Jesse |
+| Domain | fireandseed.com (GoDaddy) | Confirmed by Jesse 2026-11-02 |
 | Second domain | brainspottingpointers.com (on Jesse's old flier) redirects to /brainspotting-pointers/ | To confirm spelling; DNS only with Jesse's OK |
 | Not ours | brainspotting-pointers.com (with a hyphen) belongs to another seller | Do not link or redirect |
 | Order email | jesse@intrinsicchange.com | Coordinator's suggestion; to confirm with Jesse |

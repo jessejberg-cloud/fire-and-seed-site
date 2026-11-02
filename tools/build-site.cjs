@@ -10,8 +10,8 @@ const SRC = path.join(ROOT, 'site-src');
 const DIST = path.join(ROOT, 'dist');
 
 // ---------------------------------------------------------------- facts (change here, nowhere else)
-const ORIGIN = 'https://fireandseed.com';            // to confirm with Jesse
-const EMAIL = 'jesse@intrinsicchange.com';             // to confirm with Jesse
+const ORIGIN = 'https://fireandseed.com';            // confirmed by Jesse 2026-11-02
+const EMAIL = 'jesse@intrinsicchange.com';             // confirmed by Jesse 2026-11-02
 const ORDER_MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent('Brainspotting pointer')}`;
 const MAKER = 'Jesse Jonesberg';
 const YEAR = 2026;
