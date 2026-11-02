@@ -1,0 +1,9 @@
+# Netlify builds the site from source on every push.
+#   main      -> the live site
+#   other branches / pull requests -> preview links
+[build]
+  command = "node tools/build-site.cjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
