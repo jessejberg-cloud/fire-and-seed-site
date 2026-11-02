@@ -6,7 +6,7 @@
 | Domain | fireandseed.com (GoDaddy) | Confirmed by Jesse 2026-11-02 |
 | Second domain | brainspottingpointers.com (on Jesse's old flier) redirects to /brainspotting-pointers/ | To confirm spelling; DNS only with Jesse's OK |
 | Not ours | brainspotting-pointers.com (with a hyphen) belongs to another seller | Do not link or redirect |
-| Order email | jesse@intrinsicchange.com | Coordinator's suggestion; to confirm with Jesse |
+| Order email | jesse@intrinsicchange.com | Confirmed by Jesse 2026-11-02 |
 | Product | Hand-turned wooden Brainspotting pointer kit (was "Heartwood", earlier "Stillpoint") | |
 | Prices | Domestic kit $160 (walnut, white walnut, oak or ash); exotic kit $180 (olive). Shipping and tax included | From the Heartwood handoff, Nov 2026 |
 | Payment | Venmo or PayPal, by email arrangement. Custom: half deposit, balance before shipping; ships the day after | |
