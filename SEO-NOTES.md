@@ -21,7 +21,8 @@ Hand-turned **wood** (nobody else in the results), made by a **therapist and Bra
 ## Words the site uses on purpose
 - Title and H1: "Handmade Wooden Brainspotting Pointers" (the page) and "Hand-turned Brainspotting pointers" (the home title).
 - In the copy and FAQ: Brainspotting pointer, BSP, hand-turned, handmade, custom, wooden, hardwood, walnut, olive wood, glass tips, toppers, stones, magnetic, pocket, kit, gift, Brainspotting practitioner, therapist.
-- Not used: "telescoping" (until Jesse confirms the rod telescopes), "crystal healing" claims, any promised outcome.
+- "Telescoping" and "pocket-sized" added 2026-11-02 (Jesse confirmed: extends out, smaller than a typical pointer when closed).
+- Not used: "crystal healing" claims, any promised outcome.
 
 ## For AI search
 - `/llms.txt` gives a plain fact sheet (who makes them, woods, prices, how to order).

@@ -108,8 +108,8 @@ const FAQ = [
     'Yes. Walnut, white walnut, oak, ash and olive are the woods I turn most often. If you have another wood in mind, ask me and I will tell you whether I can get it.'],
   ['Can I choose the tips?',
     'Yes. The kit comes with three large interchangeable glass tips, and you pick the colors. You can add up to five small glass beads, or a handful of stones with magnets, glue and instructions. I can glue the tips for you or send them for you to put together.'],
-  ['Does it fit in a pocket?',
-    'Yes. I made it compact on purpose, so it fits in a pocket or a bag and travels between offices. It comes with a leather storage bag.'],
+  ['Does it telescope? Does it fit in a pocket?',
+    'Yes to both. The pointer telescopes, so it extends out for sessions and closes down small. Closed, it is smaller than a typical telescoping pointer and fits in a pocket or a bag. It comes with a leather storage bag.'],
   ['Can I order one as a gift?',
     'Yes. A pointer can be a gift for a colleague or for someone finishing their Brainspotting training. Tell me who it is for and what they like, and I can help you choose.'],
   ['How do I order?',
@@ -175,12 +175,12 @@ const ready = READY.length ? `
 pages['/brainspotting-pointers/'] = page({
   url: '/brainspotting-pointers/',
   title: 'Handmade Wooden Brainspotting Pointers | Fire & Seed',
-  description: 'Custom wooden Brainspotting pointers, hand-turned one at a time by a therapist and Brainspotting practitioner. Choose your wood, glass tips or stone toppers. From $160, shipping included.',
+  description: 'Custom, pocket-sized telescoping Brainspotting pointers, hand-turned from wood by a therapist and Brainspotting practitioner. Choose your wood and tips. From $160.',
   schema: [
     { '@context': 'https://schema.org', '@graph': [ORG, PERSON, {
       '@type': 'Product', '@id': `${ORIGIN}/brainspotting-pointers/#pointer`,
       name: 'Hand-turned Brainspotting pointer kit',
-      description: 'A custom Brainspotting pointer hand-turned from solid hardwood, with interchangeable magnetized recycled glass tips, a leather storage bag, a tip pouch, a microfiber cloth, a beeswax tin and a care card. Choice of wood and tip colors.',
+      description: 'A custom, pocket-sized telescoping Brainspotting pointer with a handle hand-turned from solid hardwood, with interchangeable magnetized recycled glass tips, a leather storage bag, a tip pouch, a microfiber cloth, a beeswax tin and a care card. Choice of wood and tip colors.',
       image: ['tip', 'beads', 'kit'].map(n => `${ORIGIN}/assets/photos/pointer-${n}.webp`),
       brand: { '@type': 'Brand', name: 'Fire & Seed' },
       manufacturer: { '@id': `${ORIGIN}/#jesse` },
@@ -206,7 +206,7 @@ pages['/brainspotting-pointers/'] = page({
   <p class="eyebrow">Made to order</p>
   <h1>Handmade wooden Brainspotting pointers</h1>
   <p class="lede">As a Brainspotting practitioner and woodworker, I wanted a pointer made from natural materials that is comfortable, portable and easy to change. So I made one.</p>
-  <p>I turn each pointer by hand from solid hardwood, sized to sit steady in the hand and fit in a pocket. You choose the wood and the glass tips, and I work with you until you are happy with it. It is made to wear in, not wear out.</p>
+  <p>I turn each pointer by hand from solid hardwood, with a telescoping rod that extends for sessions and closes down small enough for a pocket. You choose the wood and the glass tips, and I work with you until you are happy with it. It is made to wear in, not wear out.</p>
   <p><a class="button" href="${ORDER_MAILTO}">Email me about a pointer</a></p>
 </header>
 
@@ -320,7 +320,7 @@ const llms = `# Fire & Seed
 - Woods: walnut, white walnut, oak, ash (domestic kit, $${KITS[0].price}); olive (exotic kit, $${KITS[1].price}). Other woods on request.
 - Tips: interchangeable magnetized recycled glass tips in the buyer's chosen colors; small beads or stones on request.
 - Kit: pointer, labeled leather storage bag, three glass tips, tip pouch, microfiber cloth, beeswax tin, care card.
-- Compact; fits in a pocket.
+- Telescoping: extends for sessions, closes smaller than a typical telescoping pointer, fits in a pocket.
 - Shipping and tax included in the price. Pay by Venmo or PayPal; custom orders take half as a deposit.
 - Jesse works with each buyer until they are happy with their pointer.
 

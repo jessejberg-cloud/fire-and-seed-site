@@ -10,6 +10,7 @@
 | Product | Hand-turned wooden Brainspotting pointer kit (was "Heartwood", earlier "Stillpoint") | |
 | Prices | Domestic kit $160 (walnut, white walnut, oak or ash); exotic kit $180 (olive). Shipping and tax included | From the Heartwood handoff, Nov 2026 |
 | Payment | Venmo or PayPal, by email arrangement. Custom: half deposit, balance before shipping; ships the day after | |
+| Size | Telescoping; pocket-sized, smaller than a typical pointer when closed | Jesse, 2026-11-02 |
 | Kit | Pointer, labeled leather bag, 3 magnetized recycled glass tips, tip pouch, microfiber cloth, beeswax tin, care card | Old flier and Stillpoint text |
 | Tips | 3 large glass; up to 5 small beads; or stones with 5 magnets, glue, instructions; other colors on request; glued by Jesse or self-assembled | |
 | Photos | Cropped from Jesse's Heartwood flier (08 Miscellaneous\Pointer Sales). Replace with full-size photos when Jesse has them | Temporary |
@@ -26,3 +27,4 @@
 | Date | Change |
 | --- | --- |
 | 2026-11-02 | First version built locally: home, /brainspotting-pointers/ (FAQ, Product + Organization + FAQPage + Breadcrumb schema), /connect/, 404, sitemap, robots.txt, llms.txt, redirects. Copy drafted by Claude from Jesse's flier, care card and Stillpoint text; waiting for Jesse's review. Not pushed anywhere. |
+| 2026-11-02 | Domain fireandseed.com and order email jesse@intrinsicchange.com confirmed. Added "telescoping" and "pocket-sized" to the pointer page, FAQ, schema and llms.txt. |
