@@ -1,0 +1,83 @@
+/* Fire & Seed identity (design standard v1, §9; Jesse, Nov 13 2026: stoneware, every accent stamped or fire-burned).
+   The shared kit (kit/standard.css, the same file as on divergenttherapy.org and intrinsicchange.com) reads only the
+   slot names below, and so do the site's own page styles (site.css). No colour literal lives anywhere else: the build
+   checks it (tools/check-tokens.cjs). Focus strokes, link underlines and form marks are drawn from these colours by
+   tools/fs-brushes.cjs into kit/brushes.css. The glaze, the clay and the glaze's edge are drawn from noise by
+   tools/fs-glaze.py. Calm, spare, warm greige; one red from the mark; silver kept for the mends. Never gold. */
+
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 600; font-display: swap; src: url("/assets/fonts/fraunces-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-style: italic; font-weight: 500; font-display: swap; src: url("/assets/fonts/fraunces-latin-500-italic.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible"; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Alfa Slab One"; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/alfa-slab-one-latin-400-normal.woff2") format("woff2"); }
+
+:root {
+  /* fonts: Fraunces for headings, menus and buttons; Atkinson Hyperlegible for every word of text; Alfa Slab One only
+     inside the mark */
+  --font-head: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-quote: "Fraunces", Georgia, serif;
+  --font-main-action: var(--font-head);
+  --font-ui: var(--font-head);
+  --head-weight: 600;
+  --ui-weight: 600;
+
+  /* the palette: stoneware (raw greige clay, a pale glaze, a dark iron glaze for the footer), the mark's red, silver */
+  --pal-clay: #e8e2d8;  --pal-glaze: #cbc3b2;  --pal-pale: #f3efe8;  --pal-iron: #2f2a25;
+  --pal-red: #8f2a1c;   --pal-red-deep: #6f1f14;  --pal-silver: #9da3a6;
+
+  --c-ground: #e8e2d8;            /* raw clay: the page */
+  --c-ground-2: #2f2a25;          /* iron glaze: the footer */
+  --c-header: #ddd6c9;            /* the top strip: a thinner glaze */
+  --c-surface: #f3efe8;           /* form fields, the lightest surface */
+  --c-band: #cbc3b2;              /* pale glaze: the bands */
+  --c-band-accent: #cbc3b2; --c-band-olive: #cbc3b2; --c-band-ochre: #cbc3b2; --c-band-moss: #cbc3b2;
+  --c-on-deep: #e3dccf;           /* text on iron (12:1) */
+  --c-deep-accent: #f3efe8;
+  --c-focus-deep: #f3efe8;
+  --c-on-dark: #f7efe4;
+  --c-shape-green: transparent; --c-shape-black: transparent; --c-shape-ochre: transparent; --c-shape-orange: transparent; --c-shape-olive: transparent; --c-shape-plum: transparent;
+  --c-frame: #cbc3b2;
+  --c-piece-cream: #ddd6c9; --c-piece-teal: #ddd6c9; --c-piece-sage: #ddd6c9; --c-piece-mustard: #ddd6c9; --c-piece-sand: #ddd6c9;
+  --c-quiet: #cdbfa8; --c-quiet-hover: #bfae93;
+  --c-ink: #24211d;               /* text (13.6:1 on clay, 10.4:1 on glaze) */
+  --c-ink-2: #514b44;             /* quieter text (7.4:1 on clay, 5.6:1 on glaze) */
+  --c-heading: #24211d;
+  --c-action: #7c2618;            /* the mark's red, deepened for links (7.7:1 on clay, 5.9:1 on glaze) */
+  --c-action-hover: #5a1a10;
+  --c-label: #7c2618;
+  --c-on-action: #f7efe4;         /* the label on the red stamp */
+  --c-accent: #7c2618;            /* a form error's words */
+  --c-line: rgba(124, 38, 24, 0.45);   /* muted underline */
+  --c-rule: rgba(36, 33, 29, 0.14);    /* the rare hairline */
+  --c-focus: #24211d;             /* the focus stroke: charcoal ink */
+  --c-field-ink: #6a6157;
+  --c-silver: #9da3a6;            /* the mends (kept for the stamped and burned marks to come) */
+  --first-letter: inherit;
+  --rule-ink: var(--ink-line);
+
+  /* the logo and the hero the kit reads */
+  --logo-h: 56px; --logo-h-tablet: 50px;
+  --logo-h-phone: 40px;
+  --brand-tag-x: 0; --brand-tag-y: 0;
+  --hero-foot: var(--space-7);
+
+  /* buttons are stamped prints, one picture each (no painted lift-off): tools/fs-glaze.py draws a stand-in until
+     Jesse's own stamp prints are photographed and traced */
+  --brush-tail: 100%; --brush-tail-small: 100%; --brush-tail-tight: 100%;
+  --brush-primary: url("/assets/glaze/stamp.png");
+  --brush-primary-hover: url("/assets/glaze/stamp-hover.png");
+  --brush-quiet: url("/assets/glaze/stamp-quiet.png");
+  --brush-quiet-hover: url("/assets/glaze/stamp-quiet-hover.png");
+  --brush-deep: url("/assets/glaze/stamp-quiet.png");
+  --brush-deep-hover: url("/assets/glaze/stamp-quiet-hover.png");
+
+  /* the clay and the glaze (tools/fs-glaze.py): the kit's three paper slots take the glaze */
+  --clay: url("/assets/glaze/ground.png");
+  --paper-band: url("/assets/glaze/glaze.png");
+  --paper-piece: url("/assets/glaze/glaze.png");
+  --paper-strip: url("/assets/glaze/glaze.png");
+  --paper-size: 640px;
+}
+/* On paper: no glaze. */
+@media print { :root { --paper-band: none; --paper-piece: none; --paper-strip: none; --clay: none; } }

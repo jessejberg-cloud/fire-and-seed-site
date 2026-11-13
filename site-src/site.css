@@ -1,0 +1,72 @@
+/* Fire & Seed page styles, on top of the shared kit. Colours live in kit/identity.css only (tools/check-tokens.cjs).
+   Material (Jesse, Nov 13 2026): stoneware. The page is raw clay; bands are a pale glaze whose own edge is the only
+   edge (no drawn line along it). Every accent is a stamp or a burn mark: the button is a stand-in stamp until Jesse's
+   own prints are traced; frames, dividers and heading marks wait for them, so none are drawn here. */
+
+:root {
+  /* the glaze's edge (tools/fs-glaze.py): taller than the kit's torn paper, so its slow wander reads */
+  --edge-h: clamp(26px, 3vw, 44px);
+  --edge-torn-top: url("/assets/glaze/edge-top.png");
+  --edge-torn-bottom: url("/assets/glaze/edge-bottom.png");
+  --edge-w: 1600px;
+}
+
+body { background-image: var(--clay); background-size: 512px; }
+
+/* the glaze edge keeps its drawing at every width: laid at its own size and repeated sideways, never squeezed */
+.band::before {
+  -webkit-mask: var(--edge-torn-top) center top / var(--edge-w) var(--edge-h) repeat-x, linear-gradient(#000 0 0) center / 100% calc(100% - 2 * var(--edge-h) + 2px) no-repeat, var(--edge-torn-bottom) center bottom / var(--edge-w) var(--edge-h) repeat-x;
+          mask: var(--edge-torn-top) center top / var(--edge-w) var(--edge-h) repeat-x, linear-gradient(#000 0 0) center / 100% calc(100% - 2 * var(--edge-h) + 2px) no-repeat, var(--edge-torn-bottom) center bottom / var(--edge-w) var(--edge-h) repeat-x;
+}
+.band:has(+ .band)::before, main > .section.band:last-child::before {
+  -webkit-mask: var(--edge-torn-top) center top / var(--edge-w) var(--edge-h) repeat-x, linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--edge-h) + 1px) no-repeat;
+          mask: var(--edge-torn-top) center top / var(--edge-w) var(--edge-h) repeat-x, linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--edge-h) + 1px) no-repeat;
+}
+.site-header::before {
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - var(--edge-h) + 1px) no-repeat, var(--edge-torn-bottom) center bottom / var(--edge-w) var(--edge-h) repeat-x;
+          mask: linear-gradient(#000 0 0) top / 100% calc(100% - var(--edge-h) + 1px) no-repeat, var(--edge-torn-bottom) center bottom / var(--edge-w) var(--edge-h) repeat-x;
+}
+.site-footer::before {
+  -webkit-mask: var(--edge-torn-top) center top / var(--edge-w) var(--edge-h) repeat-x, linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--edge-h) + 1px) no-repeat;
+          mask: var(--edge-torn-top) center top / var(--edge-w) var(--edge-h) repeat-x, linear-gradient(#000 0 0) bottom / 100% calc(100% - var(--edge-h) + 1px) no-repeat;
+}
+/* no drawn line in the fine print: it waits for a stamped or burned mark */
+.footer-fine::before { content: none; }
+
+/* the logo in the top strip is the drawn mark (tools/mark.cjs) */
+.brand svg { display: block; height: var(--logo-h); width: auto; }
+@media (max-width: 960px) { .brand svg { height: var(--logo-h-tablet); } }
+@media (max-width: 640px) { .brand svg { height: var(--logo-h-phone); } }
+
+/* home: the mark, large, and its one line */
+.fs-hero { padding: var(--space-6) 0 calc(var(--space-7) + var(--space-5)); text-align: center; }
+.fs-lockup { width: min(480px, 82vw); margin: 0 auto; }
+.fs-lockup svg { display: block; width: 100%; height: auto; }
+.fs-motto { margin: var(--space-6) auto 0; font-family: var(--font-quote); font-style: italic; font-weight: 500; font-size: var(--text-h3); color: var(--c-ink-2); }
+.fs-statement { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(var(--space-6), 6vw, 5rem); align-items: baseline; }
+.fs-statement p { font-size: var(--text-h3); line-height: 1.5; margin: 0; }
+@media (max-width: 960px) { .fs-statement { display: block; } }
+
+/* photos: square crops of the flier until Jesse sends full-size ones; no frame drawn (stamped frames to come) */
+.fs-photo { margin: 0; justify-self: center; width: min(100%, 26rem); }
+.fs-photo img { width: 100%; height: auto; filter: saturate(0.88) sepia(0.05); }
+.fs-photo--wide { width: min(100%, 28rem); }
+
+/* the two kits: one line each, the price at the end (no box, no rule) */
+.fs-kits { list-style: none; margin: 0 0 var(--space-4); padding: 0; display: grid; gap: var(--space-4); }
+.fs-kits li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-5); align-items: baseline; }
+.kit-name { font-family: var(--font-head); font-weight: var(--head-weight); font-size: var(--text-h3); color: var(--c-heading); }
+.kit-woods { grid-column: 1; color: var(--c-ink-2); }
+.kit-price { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--font-head); font-weight: var(--head-weight); font-size: var(--text-h2); color: var(--c-heading); }
+
+/* how an order works: four short steps in a row */
+.fs-steps { --cols: 4; counter-reset: step; }
+.fs-steps h3 { margin: 0 0 var(--space-2); }
+.fs-steps p { margin: 0; }
+@media (max-width: 960px) { .fs-steps { --cols: 2; } }
+@media (max-width: 640px) { .fs-steps { --cols: 1; } }
+
+.page-label { margin: 0 0 var(--space-2); font-family: var(--font-head); color: var(--c-label); }
+.fs-invite { text-align: left; }
+.fs-invite .actions { margin-top: 0; }
+.fs-connect .lead { max-width: 40ch; }

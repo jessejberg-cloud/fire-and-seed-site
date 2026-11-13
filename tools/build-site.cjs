@@ -24,20 +24,52 @@ const READY = [];
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// ---------------------------------------------------------------- the silver seam (gintsugi): a fine, uneven line
-function seam(seed, w = 220) {
-  let x = 0, d = 'M0,6', s = seed;
-  const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
-  while (x < w) { x += 14 + rnd() * 22; d += `L${Math.min(x, w).toFixed(1)},${(3 + rnd() * 6).toFixed(1)}`; }
-  return `<svg class="seam" viewBox="0 0 ${w} 12" aria-hidden="true" focusable="false"><path d="${d}"/></svg>`;
+// ---------------------------------------------------------------- page shell (the shared design kit)
+// Every page is built from the kit (site-src/kit/standard.css and standard.js, byte-identical to divergenttherapy.org
+// and intrinsicchange.com) with this site's identity (kit/identity.css, kit/brushes.css) and page styles (site.css).
+const NAV = [['/brainspotting-pointers/', 'Brainspotting pointers'], ['/connect/', 'Connect']];
+const photo = (src, alt, w = 560, h = 560, cls = '') => `<figure class="picture fs-photo${cls ? ' ' + cls : ''}"><img src="${src}" width="${w}" height="${h}" alt="${esc(alt)}" loading="lazy"></figure>`;
+
+function header(url) {
+  const items = NAV.map(([href, label]) => `<li><a href="${href}"${url === href ? ' aria-current="page"' : ''}>${label}</a></li>`).join('\n          ');
+  return `<header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Fire &amp; Seed home">${mark.line({ title: 'Fire and Seed' })}</a>
+      <nav class="site-nav" aria-label="Main">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">Menu</button>
+        <ul id="nav-list" class="nav-list">
+          ${items}
+        </ul>
+        <a class="btn btn--small nav-consult" href="${ORDER_MAILTO}">Email me</a>
+      </nav>
+    </div>
+  </header>`;
 }
 
-// ---------------------------------------------------------------- page shell
-const NAV = [['/brainspotting-pointers/', 'Pointers'], ['/connect/', 'Connect']];
+const footer = () => `<footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-about">
+        <p class="footer-name">Fire &amp; Seed</p>
+        <p>Made by hand by ${MAKER}</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <div class="footer-col">
+          <ul class="footer-links">
+            <li><a href="/brainspotting-pointers/">Brainspotting pointers</a></li>
+            <li><a href="/connect/">Connect</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="footer-contact">
+        <p><a href="mailto:${EMAIL}">${EMAIL}</a></p>
+      </div>
+    </div>
+    <div class="wrap footer-fine">
+      <p class="copyright">&copy; ${YEAR} Fire &amp; Seed</p>
+    </div>
+  </footer>`;
 
 function page({ url, title, description, body, schema = [], image = '/assets/og-image.jpg' }) {
-  const nav = NAV.map(([href, label]) =>
-    `<a href="${href}"${url === href ? ' aria-current="page"' : ''}>${label}</a>`).join('');
   const ld = schema.map(s => `<script type="application/ld+json">${JSON.stringify(s)}</script>`).join('\n');
   return `<!doctype html>
 <html lang="en">
@@ -54,27 +86,21 @@ function page({ url, title, description, body, schema = [], image = '/assets/og-
 <meta property="og:url" content="${ORIGIN}${url}">
 <meta property="og:image" content="${ORIGIN}${image}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#ece7df">
+<meta name="theme-color" content="#e8e2d8">
 <link rel="icon" href="/assets/brand/mark.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/alfa-slab-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
+<link rel="preload" href="/assets/fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/kit.css">
+<script>document.documentElement.classList.add('js');</script>
 ${ld}
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="top">
-  <a class="brand" href="/">${mark.line()}</a>
-  <nav aria-label="Main">${nav}</nav>
-</header>
-<main id="main">
+  <a class="skip-link" href="#main">Skip to content</a>
+  ${header(url)}
+  <main id="main">
 ${body}
-</main>
-<footer class="foot">
-  ${seam(7, 160)}
-  <p><a href="/brainspotting-pointers/">Brainspotting pointers</a> · <a href="/connect/">Connect</a></p>
-  <p><a href="mailto:${EMAIL}">${EMAIL}</a></p>
-  <p class="small">© ${YEAR} Fire &amp; Seed · Made by hand by ${MAKER}</p>
-</footer>
+  </main>
+  ${footer()}
+  <script src="/main.js" defer></script>
 </body>
 </html>
 `;
@@ -137,40 +163,43 @@ pages['/'] = page({
     '@type': 'WebSite', '@id': `${ORIGIN}/#site`, url: `${ORIGIN}/`, name: 'Fire & Seed', publisher: { '@id': `${ORIGIN}/#org` },
   }] }],
   body: `
-<section class="hero">
-  <h1 class="visually-hidden">Fire &amp; Seed</h1>
-  <div class="hero-mark">${mark.lockup({ id: 'hero', title: 'Fire and Seed: a red flame behind a brown sequoia cone, beside the words FIRE and SEED' })}</div>
-  <p class="motto">Some seeds only open in fire.</p>
-</section>
+    <section class="hero fs-hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <h1 id="hero-title" class="visually-hidden">Fire &amp; Seed</h1>
+        <div class="fs-lockup">${mark.lockup({ id: 'hero', title: 'Fire and Seed: a red flame behind a brown sequoia cone, beside the words FIRE and SEED' })}</div>
+        <p class="fs-motto">Some seeds only open in fire.</p>
+      </div>
+    </section>
 
-<section class="band reveal">
-  ${seam(3)}
-  <h2>What this place is</h2>
-  <p>I am Jesse. I am a therapist, and I turn wood. Fire &amp; Seed is where I share the things I make by hand.</p>
-</section>
+    <section class="section band" aria-labelledby="made-title">
+      <div class="wrap row-split">
+        ${photo('/assets/photos/pointer-kit-sq.webp', 'An olive wood Brainspotting pointer with its leather bag, glass tips, cloth and beeswax tin')}
+        <div>
+          <h2 id="made-title">Brainspotting pointers</h2>
+          <p>Hand-turned from hardwood, with glass tips you choose. Made to order.</p>
+          <div class="actions"><a class="btn" href="/brainspotting-pointers/">See the pointers</a></div>
+        </div>
+      </div>
+    </section>
 
-<section class="band reveal">
-  ${seam(11)}
-  <h2>Made here now</h2>
-  <a class="shelf" href="/brainspotting-pointers/">
-    <img src="/assets/photos/pointer-kit.webp" width="420" height="420" alt="An olive wood Brainspotting pointer with its leather bag, glass tips, cloth and beeswax tin">
-    <span class="shelf-text">
-      <span class="shelf-title">Brainspotting pointers</span>
-      <span>Hand-turned from hardwood, with glass tips you choose. Made to order.</span>
-      <span class="more">See the pointers</span>
-    </span>
-  </a>
-</section>
+    <section class="section" aria-labelledby="place-title">
+      <div class="wrap fs-statement">
+        <h2 id="place-title">What this place is</h2>
+        <p>I am Jesse. I am a therapist, and I turn wood. Fire &amp; Seed is where I share the things I make by hand.</p>
+      </div>
+    </section>
 `,
 });
 
-const kitRows = KITS.map(k => `<li><span class="kit-name">${k.name}</span><span class="kit-woods">${k.woods}</span><span class="kit-price">$${k.price}</span></li>`).join('');
+const kitRows = KITS.map(k => `<li><span class="kit-name">${k.name}</span><span class="kit-woods">${k.woods}</span><span class="kit-price">$${k.price}</span></li>`).join('\n            ');
 const ready = READY.length ? `
-<section class="band" id="ready">
-  ${seam(29)}
-  <h2>Ready to ship</h2>
-  <ul class="plain">${READY.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
-</section>` : '';
+    <section class="section" id="ready" aria-labelledby="ready-title">
+      <div class="wrap">
+        <h2 id="ready-title">Ready to ship</h2>
+        <ul class="plain-list">${READY.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+      </div>
+    </section>` : '';
+const ORDER_BTN = `<a class="btn" href="${ORDER_MAILTO}">Email me about a pointer</a>`;
 
 pages['/brainspotting-pointers/'] = page({
   url: '/brainspotting-pointers/',
@@ -201,85 +230,97 @@ pages['/brainspotting-pointers/'] = page({
     crumbs(['Home', '/'], ['Brainspotting pointers', '/brainspotting-pointers/']),
   ],
   body: `
-<article class="product">
-<header class="product-head">
-  <p class="eyebrow">Made to order</p>
-  <h1>Handmade wooden Brainspotting pointers</h1>
-  <p class="lede">As a Brainspotting practitioner and woodworker, I wanted a pointer made from natural materials that is comfortable, portable and easy to change. So I made one.</p>
-  <p>I turn each pointer by hand from solid hardwood, with a telescoping rod that extends for sessions and closes down small enough for a pocket. You choose the wood and the glass tips, and I work with you until you are happy with it. It is made to wear in, not wear out.</p>
-  <p><a class="button" href="${ORDER_MAILTO}">Email me about a pointer</a></p>
-</header>
+    <section class="hero hero--page" aria-labelledby="page-title">
+      <div class="wrap row-split page-open">
+        <div class="hero-text">
+          <p class="page-label">Made to order</p>
+          <h1 id="page-title">Handmade wooden Brainspotting pointers</h1>
+          <p class="lead">As a Brainspotting practitioner and woodworker, I wanted a pointer made from natural materials that is comfortable, portable and easy to change. So I made one.</p>
+          <p>I turn each pointer by hand from solid hardwood, with a telescoping rod that extends for sessions and closes down small enough for a pocket. You choose the wood and the glass tips, and I work with you until you are happy with it. It is made to wear in, not wear out.</p>
+          <div class="actions">${ORDER_BTN}</div>
+        </div>
+        ${photo('/assets/photos/pointer-tip-sq.webp', 'A blue recycled glass tip on the end of a Brainspotting pointer')}
+      </div>
+    </section>
 
-<div class="photos">
-  <img src="/assets/photos/pointer-tip.webp" width="420" height="420" alt="A blue recycled glass tip on the end of a Brainspotting pointer">
-  <img src="/assets/photos/pointer-beads.webp" width="420" height="420" alt="A dark red hardwood pointer resting on a log, with glass beads in many colors around it">
-  <img src="/assets/photos/pointer-kit.webp" width="420" height="420" alt="An olive wood pointer kit: leather bag, cloth, glass tips in a pouch and a beeswax tin">
-</div>
+    <section class="section band" aria-labelledby="wood-title">
+      <div class="wrap row-split row-split--flip">
+        ${photo('/assets/photos/pointer-beads-sq.webp', 'A dark red hardwood pointer resting on a log, with glass beads in many colors around it')}
+        <div>
+          <h2 id="wood-title">Choose your wood</h2>
+          <ul class="fs-kits">
+            ${kitRows}
+          </ul>
+          <p class="note">Shipping and tax are included. Have another wood in mind? Ask me.</p>
+        </div>
+      </div>
+    </section>
 
-<section class="band">
-  ${seam(5)}
-  <h2>Choose your wood</h2>
-  <ul class="kits">${kitRows}</ul>
-  <p class="note">Shipping and tax are included. Have another wood in mind? Ask me.</p>
-</section>
-
-<section class="band">
-  ${seam(13)}
-  <h2>Choose your tips and toppers</h2>
-  <ul class="plain">
-    <li>Three large glass tips, in the colors you pick</li>
-    <li>Up to five small glass beads, if you want them</li>
-    <li>Or a handful of stones, with magnets, glue and instructions</li>
-    <li>Other colors on request</li>
-  </ul>
-  <p class="note">The tips are recycled glass on magnets, so they swap in a second. I can glue them for you, or you can put them together yourself.</p>
-</section>
-
-<section class="band">
-  ${seam(17)}
-  <h2>What comes in the kit</h2>
-  <ul class="plain">
-    <li>Your hand-turned wooden pointer</li>
-    <li>A labeled leather storage bag</li>
-    <li>Three interchangeable magnetized glass tips</li>
-    <li>A tip pouch</li>
-    <li>A microfiber cloth</li>
-    <li>A tin of beeswax for the wood</li>
-    <li>A care card</li>
-  </ul>
-</section>
+    <section class="section" aria-labelledby="tips-title">
+      <div class="wrap row-3 row-3--2">
+        <div>
+          <h2 id="tips-title">Choose your tips and toppers</h2>
+          <ul class="plain-list">
+            <li>Three large glass tips, in the colors you pick</li>
+            <li>Up to five small glass beads, if you want them</li>
+            <li>Or a handful of stones, with magnets, glue and instructions</li>
+            <li>Other colors on request</li>
+          </ul>
+          <p class="note">The tips are recycled glass on magnets, so they swap in a second. I can glue them for you, or you can put them together yourself.</p>
+        </div>
+        <div>
+          <h2 id="kit-title">What comes in the kit</h2>
+          <ul class="plain-list">
+            <li>Your hand-turned wooden pointer</li>
+            <li>A labeled leather storage bag</li>
+            <li>Three interchangeable magnetized glass tips</li>
+            <li>A tip pouch</li>
+            <li>A microfiber cloth</li>
+            <li>A tin of beeswax for the wood</li>
+            <li>A care card</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 ${ready}
-<section class="band">
-  ${seam(19)}
-  <h2>How an order works</h2>
-  <ol class="steps">
-    <li><b>Email me.</b> Tell me the wood and colors you like, or what you are unsure about.</li>
-    <li><b>We settle the details.</b> We talk it through until the plan feels right to you.</li>
-    <li><b>I turn your pointer.</b> Half is paid as a deposit before I start.</li>
-    <li><b>It ships.</b> You pay the balance by Venmo or PayPal, and it ships the next day.</li>
-  </ol>
-</section>
+    <section class="section band" aria-labelledby="order-title">
+      <div class="wrap">
+        <h2 id="order-title">How an order works</h2>
+        <ol class="row-3 fs-steps">
+          <li><h3>Email me.</h3><p>Tell me the wood and colors you like, or what you are unsure about.</p></li>
+          <li><h3>We settle the details.</h3><p>We talk it through until the plan feels right to you.</p></li>
+          <li><h3>I turn your pointer.</h3><p>Half is paid as a deposit before I start.</p></li>
+          <li><h3>It ships.</h3><p>You pay the balance by Venmo or PayPal, and it ships the next day.</p></li>
+        </ol>
+      </div>
+    </section>
 
-<section class="band maker">
-  ${seam(23)}
-  <h2>Who makes them</h2>
-  <div class="maker-row">
-    <img src="/assets/photos/jesse.webp" width="450" height="345" alt="Jesse Jonesberg, smiling">
-    <p>I am ${MAKER}, a therapist and Brainspotting practitioner. I use a pointer in my own sessions, and I wanted one that felt grounded and personal. Every pointer here comes off my own lathe.</p>
-  </div>
-</section>
+    <section class="section" aria-labelledby="maker-title">
+      <div class="wrap row-split">
+        <div>
+          <h2 id="maker-title">Who makes them</h2>
+          <p>I am ${MAKER}, a therapist and Brainspotting practitioner. I use a pointer in my own sessions, and I wanted one that felt grounded and personal. Every pointer here comes off my own lathe.</p>
+        </div>
+        ${photo('/assets/photos/jesse-crop.webp', 'Jesse Jonesberg, smiling', 434, 329, 'fs-photo--wide')}
+      </div>
+    </section>
 
-<section class="band" id="faq">
-  ${seam(31)}
-  <h2>Questions</h2>
-  ${FAQ.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n  ')}
-</section>
+    <section class="section band" id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title">Questions</h2>
+        <div class="fold-group">
+          ${FAQ.map(([q, a]) => `<details class="fold"><summary><span class="fold-title">${esc(q)}</span><span class="fold-mark" aria-hidden="true"></span></summary><div class="fold-body"><p>${esc(a)}</p></div></details>`).join('\n          ')}
+        </div>
+      </div>
+    </section>
 
-<section class="band end">
-  <p><a class="button" href="${ORDER_MAILTO}">Email me about a pointer</a></p>
-  <p class="note"><a href="mailto:${EMAIL}">${EMAIL}</a></p>
-</section>
-</article>
+    <section class="section fs-invite" aria-labelledby="invite-title">
+      <div class="wrap">
+        <h2 id="invite-title" class="visually-hidden">Order a pointer</h2>
+        <div class="actions">${ORDER_BTN}</div>
+        <p class="first-line"><a href="mailto:${EMAIL}">${EMAIL}</a></p>
+      </div>
+    </section>
 `,
 });
 
@@ -289,12 +330,14 @@ pages['/connect/'] = page({
   description: 'Email Jesse Jonesberg at Fire & Seed about a custom hand-turned Brainspotting pointer.',
   schema: [crumbs(['Home', '/'], ['Connect', '/connect/'])],
   body: `
-<section class="band first">
-  <h1>Connect</h1>
-  <p>Orders and questions come to my email for now. I read every one.</p>
-  <p><a class="button" href="${ORDER_MAILTO}">Email me</a></p>
-  <p class="note"><a href="mailto:${EMAIL}">${EMAIL}</a></p>
-</section>
+    <section class="hero hero--page fs-connect" aria-labelledby="page-title">
+      <div class="wrap">
+        <h1 id="page-title">Connect</h1>
+        <p class="lead">Orders and questions come to my email for now. I read every one.</p>
+        <div class="actions"><a class="btn" href="${ORDER_MAILTO}">Email me</a></div>
+        <p class="first-line"><a href="mailto:${EMAIL}">${EMAIL}</a></p>
+      </div>
+    </section>
 `,
 });
 
@@ -303,10 +346,12 @@ const notFound = page({
   title: 'Page not found | Fire & Seed',
   description: 'This page is not here.',
   body: `
-<section class="band first">
-  <h1>This page is not here</h1>
-  <p><a href="/brainspotting-pointers/">See the Brainspotting pointers</a> or go <a href="/">home</a>.</p>
-</section>
+    <section class="hero hero--page" aria-labelledby="page-title">
+      <div class="wrap">
+        <h1 id="page-title">This page is not here</h1>
+        <p><a href="/brainspotting-pointers/">See the Brainspotting pointers</a> or go <a href="/">home</a>.</p>
+      </div>
+    </section>
 `,
 });
 
@@ -332,7 +377,16 @@ const llms = `# Fire & Seed
 // ---------------------------------------------------------------- write
 fs.rmSync(DIST, { recursive: true, force: true });
 fs.mkdirSync(DIST, { recursive: true });
-fs.cpSync(SRC, DIST, { recursive: true });
+fs.cpSync(SRC, DIST, { recursive: true, filter: f => { const r = path.relative(SRC, f); return r !== 'kit' && !r.startsWith('kit' + path.sep) && r !== 'site.css'; } });
+// one stylesheet: this site's identity + the strokes drawn from it + the shared kit + this site's page styles.
+// tools/check-tokens.cjs fails the build on a colour literal or a font size outside the tokens in the kit and site.css.
+const readSrc = f => fs.readFileSync(path.join(SRC, f), 'utf8');
+const TOKENS = require('./check-tokens.cjs');
+TOKENS.check(readSrc('kit/standard.css'), 'site-src/kit/standard.css');
+TOKENS.check(readSrc('site.css'), 'site-src/site.css');
+if (readSrc('kit/brushes.css') !== require('./fs-brushes.cjs').draw(readSrc('kit/identity.css'))) throw new Error('site-src/kit/brushes.css is out of date: run node tools/fs-brushes.cjs');
+fs.writeFileSync(path.join(DIST, 'kit.css'), ['kit/identity.css', 'kit/brushes.css', 'kit/standard.css', 'site.css'].map(readSrc).join('\n'));
+fs.copyFileSync(path.join(SRC, 'kit', 'standard.js'), path.join(DIST, 'main.js'));
 fs.mkdirSync(path.join(DIST, 'assets', 'brand'), { recursive: true });
 fs.writeFileSync(path.join(DIST, 'assets', 'brand', 'mark.svg'), mark.symbol());
 for (const [url, html] of Object.entries(pages)) {
